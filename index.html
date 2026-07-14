@@ -484,7 +484,7 @@
   /* ---------- YouTube background music ---------- */
   // 1) روح لينك الأغنية على يوتيوب واستخرج الـ VIDEO_ID (الجزء بعد v= أو بعد youtu.be/)
   // 2) حط الـ ID مكان النص ده تحت
-  const VIDEO_ID = 'CPE0Z_pQ26E';
+  const VIDEO_ID = '4PUFV17_VkA';
 
   let player, musicStarted = false;
   const musicBtn = document.getElementById('music-toggle');
@@ -497,7 +497,7 @@
   window.onYouTubeIframeAPIReady = function(){
     player = new YT.Player('yt-player', {
       height:'1', width:'1', videoId: VIDEO_ID,
-      playerVars:{ autoplay:0, controls:0, loop:1, playlist:VIDEO_ID, start:48 },
+      playerVars:{ autoplay:0, controls:0, loop:1, playlist:VIDEO_ID, start:74 },
       events:{ onReady: ()=>{} }
     });
   };
@@ -505,7 +505,7 @@
 
   function startMusic(){
     if(!player || musicStarted) return;
-    try{ player.seekTo(48, true); player.playVideo(); musicStarted = true; musicBtn.classList.add('playing'); }catch(e){}
+    try{ player.seekTo(74, true); player.playVideo(); musicStarted = true; musicBtn.classList.add('playing'); }catch(e){}
   }
   musicBtn.addEventListener('click', ()=>{
     if(!player){ return; }
