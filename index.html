@@ -497,7 +497,7 @@
   window.onYouTubeIframeAPIReady = function(){
     player = new YT.Player('yt-player', {
       height:'1', width:'1', videoId: VIDEO_ID,
-      playerVars:{ autoplay:0, controls:0, loop:1, playlist:VIDEO_ID },
+      playerVars:{ autoplay:0, controls:0, loop:1, playlist:VIDEO_ID, start:48 },
       events:{ onReady: ()=>{} }
     });
   };
@@ -505,7 +505,7 @@
 
   function startMusic(){
     if(!player || musicStarted) return;
-    try{ player.playVideo(); musicStarted = true; musicBtn.classList.add('playing'); }catch(e){}
+    try{ player.seekTo(48, true); player.playVideo(); musicStarted = true; musicBtn.classList.add('playing'); }catch(e){}
   }
   musicBtn.addEventListener('click', ()=>{
     if(!player){ return; }
