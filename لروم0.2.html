@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>لروم 🌙</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0a0e27;
+    --navy-mid:#141b3d;
+    --navy-panel:#1c2456;
+    --gold:#f0c674;
+    --rose:#e8a5b0;
+    --periwinkle:#8a92e8;
+    --ivory:#f6f2e9;
+    --ivory-dim:#c9c6d8;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html,body{
+    height:100%;
+    background:var(--navy-deep);
+    overflow:hidden;
+    font-family:'Tajawal',sans-serif;
+  }
+
+  body{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    height:100dvh;
+  }
+
+  /* ---------- SKY ---------- */
+  #sky{
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(ellipse at 50% 120%, rgba(138,146,232,0.15), transparent 60%),
+      radial-gradient(ellipse at 20% 0%, rgba(28,36,86,0.9), var(--navy-deep) 55%),
+      linear-gradient(180deg, var(--navy-deep) 0%, var(--navy-mid) 55%, #060814 100%);
+    z-index:0;
+  }
+
+  .star{
+    position:absolute;
+    background:var(--ivory);
+    border-radius:50%;
+    opacity:.7;
+    animation:twinkle var(--dur,3s) ease-in-out infinite;
+  }
+
+  @keyframes twinkle{
+    0%,100%{opacity:.2; transform:scale(1);}
+    50%{opacity:1; transform:scale(1.3);}
+  }
+
+  .shooting-star{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:var(--ivory);
+    border-radius:50%;
+    box-shadow:0 0 6px 2px rgba(246,242,233,0.8);
+    opacity:0;
+    animation:shoot 1.6s ease-in forwards;
+  }
+  .shooting-star::before{
+    content:'';
+    position:absolute;
+    top:50%; right:0;
+    width:90px; height:1px;
+    background:linear-gradient(90deg, transparent, rgba(246,242,233,.9));
+    transform:translateY(-50%);
+  }
+  @keyframes shoot{
+    0%{opacity:0; transform:translate(0,0);}
+    10%{opacity:1;}
+    80%{opacity:.8;}
+    100%{opacity:0; transform:translate(-320px,220px);}
+  }
+
+  #moon{
+    position:absolute;
+    top:4vh;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(18vw,14vh,110px);
+    height:min(18vw,14vh,110px);
+    z-index:1;
+    filter:drop-shadow(0 0 40px rgba(240,198,116,0.45));
+    transition:filter .6s ease;
+  }
+  #moon svg{width:100%;height:100%;display:block;}
+
+  /* ---------- SCENES ---------- */
+  #scenes{
+    position:relative;
+    z-index:2;
+    height:100%;
+    display:flex;
+    width:400%;
+    transition:transform .9s cubic-bezier(.65,0,.35,1);
+  }
+
+  .scene{
+    width:25%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22vh 6vw 12vh;
+  }
+
+  .scene-inner{
+    position:relative;
+    z-index:3;
+    max-width:640px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity .9s ease .25s, transform .9s ease .25s;
+  }
+
+  .scene.active .scene-inner{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  .eyebrow{
+    font-size:.85rem;
+    letter-spacing:.15em;
+    color:var(--gold);
+    opacity:.85;
+    margin-bottom:1rem;
+    font-weight:500;
+  }
+
+  h1,h2{
+    font-family:'Aref Ruqaa', serif;
+    color:var(--ivory);
+    font-weight:700;
+    line-height:1.35;
+  }
+
+  h1{font-size:clamp(2.2rem,7vw,4rem); margin-bottom:1.2rem;}
+  h2{font-size:clamp(1.7rem,5.5vw,2.8rem); margin-bottom:1.4rem;}
+
+  p{
+    color:var(--ivory-dim);
+    font-size:clamp(1rem,2.4vw,1.25rem);
+    line-height:2;
+    font-weight:300;
+  }
+
+  .btn{
+    margin-top:2.4rem;
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    background:transparent;
+    border:1px solid rgba(240,198,116,0.5);
+    color:var(--gold);
+    font-family:'Tajawal',sans-serif;
+    font-size:1rem;
+    font-weight:500;
+    padding:.85rem 2.2rem;
+    border-radius:999px;
+    cursor:pointer;
+    transition:all .35s ease;
+    letter-spacing:.03em;
+  }
+  .btn:hover{
+    background:rgba(240,198,116,0.1);
+    box-shadow:0 0 22px rgba(240,198,116,0.25);
+    transform:translateY(-2px);
+  }
+
+  /* constellation */
+  .constellation{
+    width:min(80vw,420px);
+    margin:1rem auto 2rem;
+  }
+  .constellation path{
+    fill:none;
+    stroke:var(--rose);
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-dasharray:600;
+    stroke-dashoffset:600;
+  }
+  .scene.active .constellation path{
+    animation:draw 2.4s ease forwards .5s;
+  }
+  .constellation circle{
+    fill:var(--gold);
+    opacity:0;
+  }
+  .scene.active .constellation circle{
+    animation:dot-in .5s ease forwards;
+  }
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  @keyframes dot-in{to{opacity:1;}}
+
+  /* wishes list */
+  .wishes{
+    list-style:none;
+    text-align:right;
+    margin:1.5rem auto 0;
+    max-width:480px;
+  }
+  .wishes li{
+    display:flex;
+    align-items:flex-start;
+    gap:.7rem;
+    color:var(--ivory);
+    font-size:clamp(1rem,2.6vw,1.2rem);
+    font-weight:400;
+    padding:.6rem 0;
+    opacity:0;
+    transform:translateY(10px);
+    transition:opacity .6s ease, transform .6s ease;
+    border-bottom:1px solid rgba(246,242,233,0.08);
+  }
+  .wishes li span.mark{color:var(--gold); font-size:1.1rem; line-height:1.6;}
+  .scene.active .wishes li{opacity:1; transform:translateY(0);}
+  .scene.active .wishes li:nth-child(1){transition-delay:.3s;}
+  .scene.active .wishes li:nth-child(2){transition-delay:.6s;}
+  .scene.active .wishes li:nth-child(3){transition-delay:.9s;}
+  .scene.active .wishes li:nth-child(4){transition-delay:1.2s;}
+
+  /* final scene */
+  .love-word{
+    font-family:'Aref Ruqaa', serif;
+    font-size:clamp(3.5rem,14vw,7rem);
+    color:var(--gold);
+    text-shadow:0 0 40px rgba(240,198,116,0.55);
+    animation:pulse-glow 3.5s ease-in-out infinite;
+  }
+  @keyframes pulse-glow{
+    0%,100%{text-shadow:0 0 30px rgba(240,198,116,0.4);}
+    50%{text-shadow:0 0 55px rgba(240,198,116,0.75);}
+  }
+  .signature{
+    margin-top:2rem;
+    color:var(--ivory-dim);
+    font-size:.95rem;
+    font-style:italic;
+    opacity:.8;
+  }
+
+  /* ---------- NAV ---------- */
+  .dots{
+    position:fixed;
+    bottom:6vh;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:.6rem;
+    z-index:5;
+  }
+  .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:rgba(246,242,233,0.25);
+    cursor:pointer;
+    transition:all .3s ease;
+  }
+  .dot.active{background:var(--gold); width:22px; border-radius:5px;}
+
+  .arrow{
+    position:fixed;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(28,36,86,0.4);
+    border:1px solid rgba(246,242,233,0.15);
+    color:var(--ivory);
+    width:42px;height:42px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    font-size:1.2rem;
+    z-index:5;
+    backdrop-filter:blur(4px);
+    transition:opacity .3s ease, background .3s ease;
+  }
+  .arrow:hover{background:rgba(240,198,116,0.15);}
+  #prev{right:3vw;}
+  #next{left:3vw;}
+  .arrow.hidden{opacity:0; pointer-events:none;}
+
+  /* music control */
+  #music-toggle{
+    position:fixed;
+    top:5vh;
+    right:5vw;
+    z-index:6;
+    width:46px;height:46px;
+    border-radius:50%;
+    background:rgba(28,36,86,0.5);
+    border:1px solid rgba(240,198,116,0.35);
+    color:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    font-size:1.15rem;
+    backdrop-filter:blur(4px);
+    transition:box-shadow .3s ease;
+  }
+  #music-toggle.playing{box-shadow:0 0 18px rgba(240,198,116,0.4);}
+
+  #yt-player{position:fixed; width:1px; height:1px; opacity:0; pointer-events:none; bottom:0; left:0;}
+
+  @media (max-width:640px){
+    .arrow{width:36px;height:36px;font-size:1rem;}
+    #prev{right:2vw;} #next{left:2vw;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .star, .shooting-star, .love-word, #moon{animation:none !important;}
+    .scene-inner, .wishes li{transition:opacity .3s ease !important; transform:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div id="sky"></div>
+
+<div id="moon">
+  <svg viewBox="0 0 100 100">
+    <defs>
+      <mask id="moonMask">
+        <rect width="100" height="100" fill="white"/>
+        <circle cx="62" cy="38" r="38" fill="black"/>
+      </mask>
+    </defs>
+    <circle cx="50" cy="50" r="42" fill="#f0c674" mask="url(#moonMask)"/>
+  </svg>
+</div>
+
+<button id="music-toggle" aria-label="تشغيل الموسيقى">♪</button>
+
+<!-- ضع لينك اليوتيوب هنا لاحقًا: بدّل قيمة VIDEO_ID بمعرّف الفيديو (الجزء اللي بعد v= في اللينك) -->
+<div id="yt-player"></div>
+
+<div id="scenes">
+
+  <!-- Scene 1 -->
+  <section class="scene active" data-index="0">
+    <div class="scene-inner">
+      <div class="eyebrow">حكاية ليلة تحت سماك</div>
+      <h1>يا روم</h1>
+      <p>في نص الزحمة والدنيا اللي بتلف بسرعة،<br>
+      حبيت أوقّف الوقت شوية… وأهديكي سما كاملة.</p>
+      <button class="btn" id="start-btn">افتحي السما ✨</button>
+    </div>
+  </section>
+
+  <!-- Scene 2 -->
+  <section class="scene" data-index="1">
+    <div class="scene-inner">
+      <div class="eyebrow">بين كل النجوم</div>
+      <h2>لقيتك إنتِ</h2>
+      <svg class="constellation" viewBox="0 0 300 180">
+        <path d="M40,140 L90,60 L150,100 L210,40 L260,110" />
+        <circle cx="40" cy="140" r="4"/>
+        <circle cx="90" cy="60" r="4"/>
+        <circle cx="150" cy="100" r="4"/>
+        <circle cx="210" cy="40" r="4"/>
+        <circle cx="260" cy="110" r="4"/>
+      </svg>
+      <p>مش بس أجمل نجمة، إنتِ السبب اللي خلّاني أبص للسما أصلاً.<br>
+      وجودك بيرتّب كل حاجة حواليا، حتى لما الدنيا تبقى مبعثرة.</p>
+    </div>
+  </section>
+
+  <!-- Scene 3 -->
+  <section class="scene" data-index="2">
+    <div class="scene-inner">
+      <div class="eyebrow">حاجات عايز تعرفيها</div>
+      <h2>عن إنتِ في حياتي</h2>
+      <ul class="wishes">
+        <li><span class="mark">✦</span> ضحكتك بتغيّر شكل يومي كله.</li>
+        <li><span class="mark">✦</span> حسّك بيديني أمان مش سهل ألاقيه.</li>
+        <li><span class="mark">✦</span> كل تفصيلة صغيرة فيكِ، عندي كبيرة.</li>
+        <li><span class="mark">✦</span> ومهما اختلفنا، إنتِ اختياري كل مرة تاني.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Scene 4 -->
+  <section class="scene" data-index="3">
+    <div class="scene-inner">
+      <div class="eyebrow">وفي الآخر بس</div>
+      <div class="love-word">أحبك</div>
+      <p style="margin-top:1.5rem;">مش هدية، ولا رسالة عادية…<br>
+      دي مجرد طريقة بسيطة أقولّك بيها إنك أهم حاجة عندي.</p>
+      <div class="signature">— حد بيحبك أكتر ما بيقول 🤍</div>
+    </div>
+  </section>
+
+</div>
+
+<div id="prev" class="arrow hidden">›</div>
+<div id="next" class="arrow">‹</div>
+
+<div class="dots">
+  <div class="dot active" data-go="0"></div>
+  <div class="dot" data-go="1"></div>
+  <div class="dot" data-go="2"></div>
+  <div class="dot" data-go="3"></div>
+</div>
+
+<script>
+  /* ---------- generate stars ---------- */
+  const sky = document.getElementById('sky');
+  const starCount = window.innerWidth < 640 ? 60 : 110;
+  for(let i=0;i<starCount;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random()*2.4 + 1;
+    s.style.width = size+'px';
+    s.style.height = size+'px';
+    s.style.top = Math.random()*100 + 'vh';
+    s.style.left = Math.random()*100 + 'vw';
+    s.style.setProperty('--dur', (2 + Math.random()*4)+'s');
+    s.style.animationDelay = (Math.random()*4)+'s';
+    sky.appendChild(s);
+  }
+
+  function shootingStar(){
+    const st = document.createElement('div');
+    st.className = 'shooting-star';
+    st.style.top = (Math.random()*40)+'vh';
+    st.style.left = (60+Math.random()*35)+'vw';
+    sky.appendChild(st);
+    setTimeout(()=>st.remove(), 1700);
+  }
+  setInterval(shootingStar, 4500);
+  setTimeout(shootingStar, 1200);
+
+  /* ---------- scene navigation ---------- */
+  const scenesWrap = document.getElementById('scenes');
+  const scenes = document.querySelectorAll('.scene');
+  const dots = document.querySelectorAll('.dot');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  let current = 0;
+  const total = scenes.length;
+
+  function goTo(i){
+    if(i<0 || i>=total) return;
+    scenes[current].classList.remove('active');
+    current = i;
+    scenes[current].classList.add('active');
+    scenesWrap.style.transform = `translateX(${current*25}%)`;
+    dots.forEach((d,idx)=>d.classList.toggle('active', idx===current));
+    prevBtn.classList.toggle('hidden', current===0);
+    nextBtn.classList.toggle('hidden', current===total-1);
+  }
+
+  document.getElementById('start-btn').addEventListener('click', ()=>{ goTo(1); startMusic(); });
+  nextBtn.addEventListener('click', ()=>goTo(current+1));
+  prevBtn.addEventListener('click', ()=>goTo(current-1));
+  dots.forEach(d=>d.addEventListener('click', ()=>goTo(parseInt(d.dataset.go))));
+
+  document.addEventListener('keydown', (e)=>{
+    if(e.key==='ArrowLeft') goTo(current+1);   // RTL: left arrow = next
+    if(e.key==='ArrowRight') goTo(current-1);
+  });
+
+  let touchX = 0;
+  document.addEventListener('touchstart', e=>touchX=e.touches[0].clientX);
+  document.addEventListener('touchend', e=>{
+    const dx = e.changedTouches[0].clientX - touchX;
+    if(Math.abs(dx) > 50){ dx < 0 ? goTo(current+1) : goTo(current-1); }
+  });
+
+  /* ---------- moon subtle drift with scene ---------- */
+  const moon = document.getElementById('moon');
+
+  /* ---------- YouTube background music ---------- */
+  // 1) روح لينك الأغنية على يوتيوب واستخرج الـ VIDEO_ID (الجزء بعد v= أو بعد youtu.be/)
+  // 2) حط الـ ID مكان النص ده تحت
+  const VIDEO_ID = 'CPE0Z_pQ26E';
+
+  let player, musicStarted = false;
+  const musicBtn = document.getElementById('music-toggle');
+
+  function loadYT(){
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+  }
+  window.onYouTubeIframeAPIReady = function(){
+    player = new YT.Player('yt-player', {
+      height:'1', width:'1', videoId: VIDEO_ID,
+      playerVars:{ autoplay:0, controls:0, loop:1, playlist:VIDEO_ID },
+      events:{ onReady: ()=>{} }
+    });
+  };
+  if(VIDEO_ID !== 'VIDEO_ID_HERE'){ loadYT(); }
+
+  function startMusic(){
+    if(!player || musicStarted) return;
+    try{ player.playVideo(); musicStarted = true; musicBtn.classList.add('playing'); }catch(e){}
+  }
+  musicBtn.addEventListener('click', ()=>{
+    if(!player){ return; }
+    if(musicStarted){
+      player.pauseVideo(); musicStarted=false; musicBtn.classList.remove('playing');
+    } else {
+      startMusic();
+    }
+  });
+</script>
+</body>
+</html>
